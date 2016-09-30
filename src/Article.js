@@ -1,26 +1,22 @@
-import React, { Component } from 'react';
-import CommentBlock from './CommentBlock';
+import React, { Component } from 'react'
+import CommentList from './CommentList'
 
 export default class Article extends Component {
 
     state = {
-        isOpen: false
+        opened: {
+            a: true
+        }
     }
 
     render() {
-        const { article } = this.props
-        const { isOpen } = this.state
-        const haveComments = article.comments && article.comments.length;
-        //haveComments логичнее в CommentBlock проверять
-        const commentBlock = haveComments ? <CommentBlock comments = { article.comments }/> : null
-        const body = isOpen ? (<div>
-            <section>{article.text}</section>
-            {commentBlock}
-        </div>) : null
+        const { article, isOpen, openArticle } = this.props
+
+        const body = isOpen ? <section>{article.text}<CommentList comments = {article.comments}/></section> : null
 
         return (
             <div>
-                <h3 onClick = {this.toggleOpen}>{article.title}</h3>
+                <h3 onClick = {openArticle}>{article.title}</h3>
                 {body}
             </div>
         )
@@ -30,5 +26,25 @@ export default class Article extends Component {
         this.setState({
             isOpen: !this.state.isOpen
         })
+/*
+
+        this.setState({
+            opened: {...this.state.opened, a: false}
+        })
+*/
     }
 }
+
+
+
+/*
+export default (props) => {
+    const { article } = props
+
+    return (
+        <div>
+            <h3>{article.title}</h3>
+            <section>{article.text}</section>
+        </div>
+    )
+}*/
