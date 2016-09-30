@@ -11,7 +11,7 @@ export default class Article extends Component {
         const { article } = this.props
         const { isOpen } = this.state
         const haveComments = article.comments && article.comments.length;
-
+        //haveComments логичнее в CommentBlock проверять
         const commentBlock = haveComments ? <CommentBlock comments = { article.comments }/> : null
         const body = isOpen ? (<div>
             <section>{article.text}</section>
