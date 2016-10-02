@@ -4,8 +4,16 @@ import toggleOpen from './decorators/toggleOpen'
 
 class CommentList extends Component {
 
+    /*
+     What is your recommendation
+     leave common type (comments: PropTypes.array)
+     or try to specify all "things" that we need to be able to use/render our component
+     and describe in such detailed way?
+     */
     static propTypes = {
-        comments: PropTypes.array
+        comments: PropTypes.arrayOf(PropTypes.shape({
+            id: PropTypes.number.isRequired
+        }))
     }
 
     componentWillMount() {

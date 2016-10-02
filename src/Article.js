@@ -1,13 +1,18 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import CommentList from './CommentList'
 
 export default class Article extends Component {
 
-    state = {
-        opened: {
-            a: true
-        }
-    }
+    static propTypes = {
+        isOpen: PropTypes.bool,
+        openArticle: PropTypes.func.isRequired,
+        article: PropTypes.shape({
+            id: PropTypes.string.isRequired,
+            title: PropTypes.string.isRequired,
+            text: PropTypes.string,
+            comments: PropTypes.array
+        }).isRequired
+    };
 
     render() {
         const { article, isOpen, openArticle } = this.props
@@ -22,6 +27,8 @@ export default class Article extends Component {
         )
     }
 
+    // Should we cleanup code all the time?
+    // Or do only that, what is required for home task
     toggleOpen = ev => {
         this.setState({
             isOpen: !this.state.isOpen
