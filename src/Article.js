@@ -29,6 +29,8 @@ export default class Article extends Component {
 
     // Should we cleanup code all the time?
     // Or do only that, what is required for home task
+    
+    //as you wish, once it become bad enough I'll clean in for you)
     toggleOpen = ev => {
         this.setState({
             isOpen: !this.state.isOpen
