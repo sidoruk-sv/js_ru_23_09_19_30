@@ -11,9 +11,9 @@ class CommentList extends Component {
      and describe in such detailed way?
      */
     static propTypes = {
-        comments: PropTypes.arrayOf(PropTypes.shape({
-            id: PropTypes.number.isRequired
-        }))
+        isOpen: PropTypes.bool.isRequired,
+        toggleOpen: PropTypes.func.isRequired,
+        comments: PropTypes.arrayOf(PropTypes.shape({ id: PropTypes.number.isRequired }))
     }
 
     componentWillMount() {
