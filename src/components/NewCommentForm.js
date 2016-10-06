@@ -19,12 +19,10 @@ export default class NewCommentForm extends Component {
 
     handleSubmit = ev => {
         ev.preventDefault();
+        const authorName = this.state.authorName.trim()
+        const comment = this.state.comment.trim()
 
-        var authorName = this.state.authorName.trim();
-        var comment = this.state.comment.trim();
-        if (!authorName || !comment) {
-            return;
-        }
+        if (!authorName || !comment) return;
 
         window.console.info(`newComment: ${comment} by ${authorName}`);
         this.setState({ authorName: '', comment: '' });
