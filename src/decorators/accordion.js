@@ -1,22 +1,17 @@
-import React from 'react'
+import React, { Component as ReactComponent} from 'react'
 
-export default function accordion(Component) {
-  return class AccordeonList extends React.Component {
+export default (Component) => class Accordion extends ReactComponent {
     state = {
-      activeAccordionItemId: null
+        openItemId: null
     }
+
+    toggleItem = id => ev => this.setState({
+        openItemId: this.isItemOpen(id) ? null : id
+    })
+
+    isItemOpen = id => this.state.openItemId == id
 
     render() {
-      const { activeAccordionItemId } = this.state
-      return <Component {...this.props} {...this.state}
-                        toggleActiveAccordionItem = {this.toggleActiveAccordionItem}
-                        activeAccordionItemId = { activeAccordionItemId } />
+        return <Component {...this.props} toggleItem = {this.toggleItem} isItemOpen = {this.isItemOpen}/>
     }
-
-    toggleActiveAccordionItem = id => ev => {
-      const isSameItem = id === this.state.activeAccordionItemId;
-      this.setState({ activeAccordionItemId: isSameItem ? null : id})
-    }
-
-  }
 }
