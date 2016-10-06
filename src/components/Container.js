@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import ArticleList from './ArticleList'
+import Calendar from './Calendar'
 import Chart from './Chart'
 import NewArticleForm from './NewArticleForm'
 import Filter from './Filter'
@@ -17,6 +18,7 @@ class Container extends Component {
                 <ArticleList articles = {articles} />
                 <Chart />
                 <NewArticleForm />
+                <Calendar />
             </div>
         )
     }
