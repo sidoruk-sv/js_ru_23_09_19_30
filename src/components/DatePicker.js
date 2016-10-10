@@ -28,7 +28,7 @@ class DatePicker extends Component {
     }
 
 }
-
+//ок, но можно сразу range доставать
 export default connect(state => ({
     filters: state.filters
 }), {
