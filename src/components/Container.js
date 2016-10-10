@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import ArticleList from './ArticleList'
 import Chart from './Chart'
 import NewArticleForm from './NewArticleForm'
-import Filter from './Filters'
+import Filters from './Filters'
 import Counter from './Counter'
 
 class Container extends Component {
@@ -13,7 +13,7 @@ class Container extends Component {
         return (
             <div>
                 <Counter />
-                <Filter articles={[]}/>
+                <Filters />
                 <ArticleList />
                 <Chart />
                 <NewArticleForm />
