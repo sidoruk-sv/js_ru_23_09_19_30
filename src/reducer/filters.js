@@ -7,6 +7,7 @@ export default (filters = { range: {}, selected: [] }, action) => {
         case CHANGE_DATE_FILTER:
             return Object.assign({}, filters, payload)
         case CHANGE_SELECTED_FILTER:
+            //не страшно, но почему здесь не тот же Object.assign({}, filters, payload)
             return Object.assign({}, filters, { selected: payload.selected })
     }
 
