@@ -1,58 +1,36 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react'
 
-export default class NewCommentForm extends Component {
+class NewCommentForm extends Component {
     static propTypes = {
-
     };
+
     state = {
-        comment: '',
-        authorName: ''
+        text: '',
+        user: ''
     }
 
-    handleAuthorNameChange = ev => {
-        this.setState({ authorName: ev.target.value })
-    };
-
-    handleCommentChange = ev => {
-        this.setState({ comment: ev.target.value })
-    }
+    handleChange = field => ev => this.setState({
+        [field]: ev.target.value
+    })
 
     handleSubmit = ev => {
-        ev.preventDefault();
-        const authorName = this.state.authorName.trim()
-        const comment = this.state.comment.trim()
-
-        if (!authorName || !comment) return;
-
-        window.console.info(`newComment: ${comment} by ${authorName}`);
-        this.setState({ authorName: '', comment: '' });
+        ev.preventDefault()
+        console.log('---', this.state)
+        this.setState({
+            user: '',
+            text: ''
+        })
     }
 
     render() {
         return (
-          <form className="commentForm" onSubmit={this.handleSubmit}>
-              <fieldset>
-                  <legend>Write a comment:</legend>
-                  <div>
-                      Your Name:<br/>
-                      <input type="text"
-                             required="required"
-                             value={this.state.authorName}
-                             onChange={this.handleAuthorNameChange}/>
-                  </div>
-                  <div>
-                      Your Comment:<br/>
-                      <textarea type="text"
-                                required="required"
-                                value={this.state.comment}
-                                onChange={this.handleCommentChange}/>
-                  </div>
-                  <div>
-                      <input type="submit" value="Post Comment"/>
-                  </div>
-              </fieldset>
-          </form>
-
+            <form onSubmit = {this.handleSubmit}>
+                comment: <input type="text" value={this.state.text} onChange = {this.handleChange('text')}/>
+                comment: <input type="text" value={this.state.user} onChange = {this.handleChange('user')}/>
+                <input type = "submit"/>
+            </form>
         )
     }
 }
+
+export default NewCommentForm

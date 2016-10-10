@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import Select from 'react-select'
 import 'react-select/dist/react-select.css'
 
-class Filter extends Component {
+class SelectFilter extends Component {
     static propTypes = {
         articles: PropTypes.array.isRequired
     };
@@ -20,17 +20,14 @@ class Filter extends Component {
             label: article.title,
             value: article.id
         }))
-        return (
-            <div>
-                <Select
-                    options = {options}
-                    value = {selected}
-                    multi = {true}
-                    onChange = {this.handleChange}
-                />
-            </div>
-        )
+
+        return <Select
+            options={options}
+            value={selected}
+            multi={true}
+            onChange={this.handleChange}
+        />
     }
 }
 
-export default Filter
+export default SelectFilter
