@@ -28,8 +28,12 @@ class ArticleList extends Component {
 }
 
 export default connect(state => {
-    const { articles, filters: { selected, dateRange: { from, to } } } = state
-    const filteredArticles = articles.filter(article => {
+    const { articles, filters } = state
+    const selected = filters.get('selected')
+    const { from, to } = filters.get('dateRange')
+
+    const articleArray = Object.keys(articles).map(id => articles[id])
+    const filteredArticles = articleArray.filter(article => {
         const published = Date.parse(article.date)
         return (!selected.length || selected.includes(article.id)) &&
             (!from || !to || (published > from && published < to))
