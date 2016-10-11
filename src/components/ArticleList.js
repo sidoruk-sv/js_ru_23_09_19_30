@@ -31,11 +31,6 @@ export default connect(state => ({
     articles: state.articles.filter(article => filterArticles(article, state.filters))
 }))(accordion(ArticleList))
 
-
-function getMilliseconds(dateString) {
-    return (new Date(dateString)).getTime()
-}
-
 function filterArticles(article, filters) {
     if (!(filters.range.from || filters.range.to || filters.selected.length)) {
         return true
@@ -49,14 +44,15 @@ function filterArticles(article, filters) {
 
     const dateFilterActive = Object.keys(filters.range).filter(key => !!filters.range[key]).length
     if (dateFilterActive) {
-        const articleDate = getMilliseconds(article.date);
-        const fromDate = getMilliseconds(filters.range.from);
+        const fromDate = (new Date(filters.range.from)).setHours(0, 0, 0, 0)
+        const articleRealDate = (new Date(article.date)).getTime()
+        const articleDayDate = (new Date(article.date)).setHours(0, 0, 0, 0)
 
         if (filters.range.from && filters.range.to) {
-            const toDate = getMilliseconds(filters.range.to);
-            return articleDate >= fromDate && articleDate <= toDate
+            const toDate = (new Date(filters.range.to)).setHours(23, 59, 59, 59)
+            return articleRealDate >= fromDate && articleRealDate <= toDate
         } else {
-            return fromDate === articleDate
+            return articleDayDate === fromDate
         }
     }
 }

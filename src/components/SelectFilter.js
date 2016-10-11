@@ -14,8 +14,7 @@ class SelectFilter extends Component {
     }
 
     render() {
-        const { articles } = this.props
-        const { selected }  = this.props.filters
+        const { articles, selected } = this.props
         const options = articles.map(article => ({
             label: article.title,
             value: article.id
@@ -32,8 +31,7 @@ class SelectFilter extends Component {
 
 export default connect(state => ({
     articles: state.articles,
-    //и снова не нужны все фильтры
-    filters: state.filters
+    selected: state.filters.selected
 }), {
     changeSelectedFilter
 })(SelectFilter)

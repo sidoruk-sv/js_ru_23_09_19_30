@@ -7,13 +7,13 @@ import 'react-day-picker/lib/style.css';
 class DatePicker extends Component {
 
     handleDayClick = (e, day) => {
-        const range = DateUtils.addDayToRange(day, this.props.filters.range)
+        const range = DateUtils.addDayToRange(day, this.props.range)
         this.props.changeDateFilter(range);
     }
 
     render() {
-        const { filters } = this.props
-        const { from, to } = filters.range
+        const { range } = this.props
+        const { from, to } = range
         const selectedRange = from && to && `${from.toDateString()} - ${to.toDateString()}`
         return (
             <div className="date-range">
@@ -28,9 +28,9 @@ class DatePicker extends Component {
     }
 
 }
-//ок, но можно сразу range доставать
+
 export default connect(state => ({
-    filters: state.filters
+    range: state.filters.range
 }), {
     changeDateFilter
 })(DatePicker)
