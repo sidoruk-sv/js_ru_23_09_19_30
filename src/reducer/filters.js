@@ -1,16 +1,22 @@
-import { CHANGE_SELECTED_FILTER, CHANGE_DATE_FILTER } from '../constants';
+import { CHANGE_DATE_RANGE, CHANGE_SELECTION } from '../constants'
 
-export default (filters = { range: {}, selected: [] }, action) => {
+const defaultFilters = {
+    selected: [],
+    dateRange: {
+        from: null,
+        to: null
+    }
+}
+
+export default (filters = defaultFilters, action) => {
     const { type, payload } = action
 
     switch (type) {
-        case CHANGE_DATE_FILTER:
-            return Object.assign({}, filters, payload)
-        case CHANGE_SELECTED_FILTER:
-            //не страшно, но почему здесь не тот же Object.assign({}, filters, payload)
+        case CHANGE_DATE_RANGE:
+            return {...filters,...payload}
 
-            // сначала запутался, а потом не дочистил, когда разобрался
-            return Object.assign({}, filters, payload)
+        case CHANGE_SELECTION:
+            return {...filters,...payload}
     }
 
     return filters

@@ -1,15 +1,15 @@
-import { CHANGE_SELECTED_FILTER, CHANGE_DATE_FILTER } from '../constants'
+import { CHANGE_DATE_RANGE, CHANGE_SELECTION } from '../constants'
 
-export function changeDateFilter(range) {
+export function changeDateRange(dateRange) {
     return {
-        type: 'CHANGE_DATE_FILTER',
-        payload: { range }
+        type: CHANGE_DATE_RANGE,
+        payload: { dateRange }
     }
 }
 
-export function changeSelectedFilter(selected) {
+export function changeSelection(selected) {
     return {
-        type: 'CHANGE_SELECTED_FILTER',
-        payload: {selected}
+        type: CHANGE_SELECTION,
+        payload: { selected }
     }
 }
