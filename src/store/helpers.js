@@ -10,3 +10,7 @@ export function arrayToMap(arr) {
         {...acc, [entity.id]: entity}
     ), {})
 }
+
+export function arrayToMapOfRecords(array, recordEntity) {
+    return array.reduce((acc, entity) => ({...acc, [entity.id]: new recordEntity(entity)}), {})
+}

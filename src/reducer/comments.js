@@ -1,12 +1,25 @@
 import { normalizedComments } from '../fixtures'
-import { arrayToMap } from '../store/helpers'
-import {  } from '../constants'
+import { arrayToMapOfRecords } from '../store/helpers'
+import { ADD_COMMENT } from '../constants'
+import { Record } from 'immutable'
 
-export default (comments = arrayToMap(normalizedComments), action) => {
+const commentRecord = new Record({
+    id : null,
+    user : null,
+    text: null
+
+})
+
+
+export default (comments = arrayToMapOfRecords(normalizedComments, commentRecord), action) => {
     const { type, payload, response, error } = action
 
     switch (type) {
+        case ADD_COMMENT:
+            const { id } = payload
 
+            const newComment = { [id] : new commentRecord(payload) }
+            return {...comments, ...newComment }
     }
 
     return comments
