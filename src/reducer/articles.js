@@ -20,6 +20,7 @@ export default (articles = arrayToMapOfRecords(normalizedArticles, articleRecord
             break;
         case ADD_COMMENT:
             const { articleId, id } = payload
+            //не мутируй articles
             articles[articleId].set('comments', articles[articleId].get('comments').push(id))
     }
 
