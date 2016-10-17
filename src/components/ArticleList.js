@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 
 class ArticleList extends Component {
     static propTypes = {
-        articles: PropTypes.array.isRequired,
         //from accordion decorator
         toggleItem: PropTypes.func.isRequired,
         isItemOpen: PropTypes.func.isRequired
