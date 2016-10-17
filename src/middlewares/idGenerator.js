@@ -11,6 +11,7 @@ function generateRandomIntegerKeyForHash(hash) {
 export default store => next => action => {
     const { type, payload } = action
 
+    //мидлвары должны быть максимально универсальными, стоит делать так, что б их легко можно было переиспользовать
     switch (type) {
         case ADD_COMMENT:
             const comments = store.getState().comments
