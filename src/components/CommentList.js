@@ -18,12 +18,13 @@ class CommentList extends Component {
 
     componentWillUpdate(nextProps) {
         const { article, isOpen, loadCommentList } = this.props
-        if (nextProps.isOpen && !isOpen && (!article.comments_loaded || !article.comments_loading)) loadCommentList(article.id)
+        console.log('-123:', article.commentsLoading, article.commentsLoaded);
+        if (nextProps.isOpen && !isOpen && (!article.commentsLoaded || !article.commentsLoading)) loadCommentList(article.id)
     }
 
     render() {
         const { article, comments, addComment, isOpen, toggleOpen } = this.props
-        const loader = article.comments_loading ? <Loader /> : null
+        const loader = article.commentsLoading ? <Loader /> : null
 
         if (!comments || !comments.length) {
             return (<div>
@@ -32,7 +33,7 @@ class CommentList extends Component {
             </div>)
         }
 
-        const commentItems = article.comments_loaded ?
+        const commentItems = article.commentsLoaded ?
           comments.map(comment => <li key={comment.id}><Comment comment={comment}/></li>) : null
         const text = isOpen ? 'hide comments' : `show ${comments.length} comments`
         const body = isOpen && <div>

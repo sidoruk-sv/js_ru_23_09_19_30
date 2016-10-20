@@ -5,9 +5,7 @@ import { Record, Map } from 'immutable';
 const CommentModel = Record({
     id: null,
     user: '',
-    text: '',
-    comments_loading: false,
-    comments_loaded: false
+    text: ''
 })
 
 const defaultState = new Map({
