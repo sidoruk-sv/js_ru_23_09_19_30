@@ -2,14 +2,23 @@ import React, { Component, PropTypes } from 'react'
 import Comment from './Comment'
 import toggleOpen from './../decorators/toggleOpen'
 import NewCommentForm from './NewCommentForm'
+import { connect } from 'react-redux'
+import { getRelation } from '../store/helpers'
+import { addComment } from '../AC/comments'
 
 function CommentList(props) {
-    const { comments, isOpen, toggleOpen, articleId } = props
-    if (!comments || !comments.length) return <div><p>No comments yet</p><NewCommentForm /></div>
+    const { article, comments, addComment, isOpen, toggleOpen } = props
+    if (!comments || !comments.length) return <div>
+        <p>No comments yet</p>
+        <NewCommentForm articleId = {article.id} addComment = {addComment}/>
+    </div>
 
     const commentItems = comments.map(comment => <li key={comment.id}><Comment comment={comment}/></li>)
     const text = isOpen ? 'hide comments' : `show ${comments.length} comments`
-    const body = isOpen && <div><ul>{commentItems}</ul><NewCommentForm articleId = {articleId} /></div>
+    const body = isOpen && <div>
+            <ul>{commentItems}</ul>
+            <NewCommentForm articleId = {article.id} addComment = {addComment}/>
+        </div>
 
     return (
         <div>
@@ -21,10 +30,11 @@ function CommentList(props) {
 
 CommentList.propTypes = {
     comments: PropTypes.array,
-    articleId: PropTypes.string.isRequired,
     //form toggleOpen decorator
     isOpen: PropTypes.bool,
     toggleOpen: PropTypes.func
 }
 
-export default toggleOpen(CommentList)
+export default connect((state, props) => ({
+    comments: getRelation(props.article, 'comments', state)
+}), { addComment })(toggleOpen(CommentList))
