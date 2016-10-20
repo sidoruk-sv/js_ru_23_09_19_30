@@ -23,6 +23,7 @@ class CommentList extends Component {
 
     render() {
         const { article, comments, addComment, isOpen, toggleOpen } = this.props
+        //что-то я не вижу как ты выставляешь этот comments_loading и почему вдруг не в camelCase?
         const loader = article.comments_loading ? <Loader /> : null
 
         if (!comments || !comments.length) {
