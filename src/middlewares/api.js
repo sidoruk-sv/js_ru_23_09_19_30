@@ -1,4 +1,3 @@
-import $ from 'jquery'
 import { START, SUCCESS, FAIL } from '../constants'
 
 export default store => next => action => {
@@ -9,8 +8,12 @@ export default store => next => action => {
 
     //just for dev. No need in prod
     setTimeout(() => {
-        $.get(callAPI)
-            .done(response => next({...rest, type: type + SUCCESS, response}))
-            .fail(error => next({...rest, type: type + FAIL, error}))
+        fetch(callAPI)
+            .then(res => {
+                if (!res.ok) throw new Error(res.statusText)
+                return res.json()
+            })
+            .then(response => next({...rest, type: type + SUCCESS, response}))
+            .catch(error => next({...rest, type: type + FAIL, error: error.message}))
     }, 1000)
 }

@@ -1,5 +1,5 @@
-import { normalizedArticles } from '../fixtures'
-import { DELETE_ARTICLE, ADD_COMMENT, LOAD_ALL_ARTICLES, LOAD_COMMENT_LIST, LOAD_ARTICLE, START, SUCCESS, FAIL } from '../constants'
+import { LOAD_COMMENTS_FOR_ARTICLE, DELETE_ARTICLE, ADD_COMMENT, LOAD_ALL_ARTICLES, LOAD_ARTICLE,
+    START, SUCCESS, FAIL } from '../constants'
 import { arrayToMap } from '../store/helpers'
 import { Record, Map } from 'immutable'
 
@@ -9,9 +9,9 @@ const ArticleModel = Record({
     title: "",
     text: "",
     loading: false,
-    comments: [],
     commentsLoading: false,
-    commentsLoaded: false
+    commentsLoaded: false,
+    comments: []
 })
 
 const defaultState = new Map({
@@ -47,12 +47,13 @@ export default (articles = defaultState, action) => {
         case LOAD_ARTICLE + SUCCESS:
             return articles.setIn(['entities', payload.id], new ArticleModel(response))
 
-        case LOAD_COMMENT_LIST + START:
-            return articles.setIn(['entities', payload.id, 'commentsLoading'], true)
+        case LOAD_COMMENTS_FOR_ARTICLE + START:
+            return articles.setIn(['entities', payload.articleId, 'commentsLoading'], true)
 
-        case LOAD_COMMENT_LIST + SUCCESS:
-            return articles.setIn(['entities', payload.id, 'commentsLoading'], false)
-                           .setIn(['entities', payload.id, 'commentsLoaded'], true)
+        case LOAD_COMMENTS_FOR_ARTICLE + SUCCESS:
+            return articles
+                .setIn(['entities', payload.articleId, 'commentsLoading'], false)
+                .setIn(['entities', payload.articleId, 'commentsLoaded'], true)
     }
 
     return articles
