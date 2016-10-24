@@ -1,4 +1,11 @@
-import { ADD_COMMENT, LOAD_COMMENTS_FOR_ARTICLE, START, SUCCESS } from '../constants'
+import {
+  ADD_COMMENT,
+  LOAD_COMMENTS_FOR_ARTICLE,
+  LOAD_COMMENTS_LIST,
+  COMMENTS_PAGE_LIMIT,
+  START,
+  SUCCESS
+} from '../constants'
 import $ from 'jquery'
 
 export function addComment(comment, articleId) {
@@ -8,6 +15,15 @@ export function addComment(comment, articleId) {
             articleId, comment
         },
         generateId: true
+    }
+}
+export function loadCommentListPage(pageNumber) {
+    const currentPage = pageNumber - 1;
+    const offset = currentPage * COMMENTS_PAGE_LIMIT;
+    return {
+        type: LOAD_COMMENTS_LIST,
+        payload: { pageNumber },
+        callAPI: `/api/comment?limit=${COMMENTS_PAGE_LIMIT},offset=${offset}`
     }
 }
 

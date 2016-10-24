@@ -6,6 +6,7 @@ import ArticleListPage from './routeHandlers/ArticleListPage'
 import Filters from './components/Filters'
 import NewArticleForm from './components/NewArticleForm'
 import ArticlePage from './routeHandlers/ArticlePage'
+import CommentListPage from './routeHandlers/CommentListPage'
 import NotFoundPage from './routeHandlers/NotFoundPage'
 
 export default <Router history = {browserHistory}>
@@ -15,6 +16,7 @@ export default <Router history = {browserHistory}>
             <Route path = "new" component = {NewArticleForm} />
             <Route path = ":id" component = {ArticlePage} />
         </Route>
+        <Route path = "comments/:pageNumber" component = {CommentListPage} />
         <Route path = "filters" component = {Filters} />
         <Route path = "*" component = {NotFoundPage} />
     </Route>

@@ -5,7 +5,8 @@ import NewCommentForm from './NewCommentForm'
 import Loader from './Loader'
 import { connect } from 'react-redux'
 import { getRelation } from '../store/helpers'
-import { addComment, loadCommentsForArticle } from '../AC/comments'
+import { COMMENTS_PAGE_LIMIT } from '../constants'
+import { addComment, loadCommentsForArticle, loadCommentListPage } from '../AC/comments'
 
 class CommentList extends Component {
     static propTypes = {
@@ -15,15 +16,29 @@ class CommentList extends Component {
         toggleOpen: PropTypes.func
     }
 
-    componentWillReceiveProps({ article: { id, commentsLoading, commentsLoaded }, isOpen, loadCommentsForArticle }) {
+    componentWillReceiveProps(nextProps) {
+        const {
+          article: { id, commentsLoading, commentsLoaded },
+          isOpen,
+          comments,
+          pageNumber,
+          loadCommentsForArticle,
+          loadCommentListPage
+        } = nextProps
+
+        // sorry, I didn't have time to finish that
+        // think to such a way:
+        // if (this.props.pageNumber != pageNumber && !comments && !comments.length)) loadCommentListPage(pageNumber)
+
         if (isOpen && !this.props.isOpen && !commentsLoaded && !commentsLoading) loadCommentsForArticle(id)
     }
 
     render() {
         const { article, comments, addComment, isOpen, toggleOpen } = this.props
+        const newCommentForm = article ? <NewCommentForm articleId={article.id} addComment={addComment}/> : null
         if (!comments || !comments.length) return <div>
             <p>No comments yet</p>
-            <NewCommentForm articleId={article.id} addComment={addComment}/>
+            {newCommentForm}
         </div>
 
         const commentItems = article.commentsLoaded && comments.map(comment => <li key={comment.id}><Comment comment={comment}/></li>)
@@ -32,7 +47,7 @@ class CommentList extends Component {
 
         const body = isOpen && <div>
                 {content}
-                <NewCommentForm articleId={article.id} addComment={addComment}/>
+                {newCommentForm}
             </div>
 
         return (
@@ -44,6 +59,19 @@ class CommentList extends Component {
     }
 }
 
-export default connect((state, props) => ({
-    comments: getRelation(props.article, 'comments', state)
-}), { addComment, loadCommentsForArticle })(toggleOpen(CommentList))
+export default connect((state, props) => {
+    const { article, pageNumber } = props
+    const { comments } = state
+
+    if (article) {
+        return { comments: getRelation(article, 'comments', state) }
+    } else {
+        return {
+                  comments: comments.getIn(['entities', pageNumber]),
+                  loaded: comments.get('loaded'),
+                  loading: comments.get('loading'),
+                  firstPage: pageNumber == 1,
+                  lastPage: pageNumber * COMMENTS_PAGE_LIMIT >= comments.get('total')
+        }
+    }
+}, { addComment, loadCommentsForArticle, loadCommentListPage })(toggleOpen(CommentList))

@@ -1,6 +1,6 @@
-import { arrayToMap } from '../store/helpers'
-import { ADD_COMMENT, LOAD_COMMENTS_FOR_ARTICLE, SUCCESS } from '../constants'
-import { Record, Map } from 'immutable'
+import { arrayToMap } from '../store/helpers';
+import { ADD_COMMENT, LOAD_COMMENTS_FOR_ARTICLE, LOAD_COMMENTS_LIST, SUCCESS } from '../constants';
+import { Record, Map } from 'immutable';
 
 const CommentModel = Record({
     id: null,
@@ -9,7 +9,10 @@ const CommentModel = Record({
 })
 
 const defaultState = new Map({
-    entities: new Map({})
+    entities: new Map({}),
+    total: null,
+    loading: false,
+    loaded: false
 })
 
 export default (comments = defaultState, action) => {
@@ -23,6 +26,13 @@ export default (comments = defaultState, action) => {
             return comments.update('entities', entities =>
                 entities.merge(arrayToMap(response, comment => new CommentModel(comment)))
             )
+
+        case LOAD_COMMENTS_LIST + SUCCESS:
+            return comments.update('entities', entities => {
+                               return entities.merge(arrayToMap(response, comment => new CommentModel(comment)))
+                           })
+                           .set('loading', false)
+                           .set('loaded', true)
     }
 
     return comments
