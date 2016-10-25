@@ -28,6 +28,7 @@ export default (comments = defaultState, action) => {
             )
 
         case LOAD_COMMENTS_LIST + SUCCESS:
+            //здесь помимо самих комментов стоит хранить для какой страницы ты их загружал
             return comments.update('entities', entities => {
                                return entities.merge(arrayToMap(response, comment => new CommentModel(comment)))
                            })
