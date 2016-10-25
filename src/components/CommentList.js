@@ -60,6 +60,8 @@ class CommentList extends Component {
 }
 
 export default connect((state, props) => {
+    //не, это провальная идея) делай два отдельных компонента. Если хочешь можешь вынести глупый компонент CommentList и сделать 2 конейнера, которые его оборачивают
+    //но не стоит делать такого месива логики
     const { article, pageNumber } = props
     const { comments } = state
 
