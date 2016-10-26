@@ -14,13 +14,27 @@ class Article extends Component {
         openArticle: PropTypes.func
     }
 
+    static contextTypes = {
+        router: PropTypes.object,
+        store: PropTypes.object,
+        username: PropTypes.string
+    }
+
+    componentDidMount() {
+        this.checkAndLoad(this.props)
+    }
+
     componentWillReceiveProps(nextProps) {
-        if (!nextProps.article) return
-        const { article: { id, text, loading }, isOpen, loadArticle } = nextProps
-        if (isOpen && !text && !loading) loadArticle(id)
+        this.checkAndLoad(nextProps)
+    }
+
+    checkAndLoad(props) {
+        const { article, loadArticle, id, isOpen } = props
+        if (isOpen && !article || (!article.text && !article.loading)) loadArticle(id)
     }
 
     render() {
+        console.log('---','router', this.context)
         const { article, isOpen, openArticle } = this.props
         if (!article) return null
         const loader = article.loading ? <Loader /> : null
@@ -50,4 +64,4 @@ class Article extends Component {
 }
 
 export default connect((state, { id }) => ({article: state.articles.getIn(['entities', id])}),
-    { deleteArticle, loadArticle })(Article)
+    { deleteArticle, loadArticle }, null, { pure: false })(Article)
